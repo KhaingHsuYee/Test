@@ -1,0 +1,60 @@
+//
+// Created by Khaing Hsu Yee on 1/2/2023.
+//
+#include "stdio.h"
+#include "math.h"
+
+int min(int n1,int n2){
+    if(n1>n2){
+        return n2;
+    }else{
+        return n1;
+    }
+}
+int jumpSearch(int arr[],int size,int key){
+    int step = 3;
+    int previous=0;
+    int oddNum=2;
+    while(arr[min(step,size)-1]<key){
+        previous=step;
+
+        step=step+ oddNum;
+        oddNum+=2;
+        if(previous>=size){
+            return -1;
+        }
+
+    }
+    int start=previous;
+    int end=step;
+    int mid=(start+end)/2;
+    if(key==mid){
+        return mid;
+    }else if(key<mid){
+        end=mid;
+    }else{
+        start=mid;
+    }
+
+    for(int j=start;j<end;j++){
+        if(arr[j] == key){
+            return j;
+        }
+    }
+    return -1;
+}
+int main(){
+    int arr[]={1,2,3,4,5,6,7,8,9,100,101,102};
+    int size=sizeof (arr)/sizeof (arr[0]);
+    int toFind=9;
+
+    int indexNumber=jumpSearch(arr,size,toFind);
+
+    if(indexNumber != -1){
+        printf("We found\n");
+        printf("found at index %d data : %d",indexNumber,arr[indexNumber]);
+
+    }else{
+        printf("Not Found\n");
+    }
+}
